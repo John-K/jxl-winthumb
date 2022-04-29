@@ -1,4 +1,5 @@
 use windows::core::Interface;
+use windows::Win32::UI::Shell::{SHChangeNotify, SHCNE_ASSOCCHANGED, SHCNF_IDLIST}
 use winreg::enums::*;
 use winreg::types::ToRegValue;
 use winreg::RegKey;
@@ -172,7 +173,7 @@ fn register_provider() -> std::io::Result<()> {
         ))?
         .0
         .set_value("", &"{C7657C4A-9F68-40fa-A4DF-96BC08EB3551}")?;
-
+    SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, std::ptr::null_mut(), std::ptr::null_mut());
     Ok(())
 }
 
